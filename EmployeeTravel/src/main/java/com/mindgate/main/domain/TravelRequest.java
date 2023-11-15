@@ -12,10 +12,10 @@ public class TravelRequest {
 	private String DirectorAuthorisation;
 	private int documentId;
 	private Document document;
-	private EmployeeDetails employeeDetails; 
-	
+	private EmployeeDetails employeeDetails;
+
 	public TravelRequest() {
-		
+
 	}
 
 	public TravelRequest(int requestId, int employeeId, String travelMedium, String travelStartDate,
@@ -140,6 +140,5 @@ public class TravelRequest {
 				+ ", DirectorAuthorisation=" + DirectorAuthorisation + ", documentId=" + documentId + ", document="
 				+ document + ", employeeDetails=" + employeeDetails + "]";
 	}
-	
 
 }

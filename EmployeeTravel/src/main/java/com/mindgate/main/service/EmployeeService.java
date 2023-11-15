@@ -7,14 +7,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.mindgate.main.domain.EmployeeDetails;
+//import com.mindgate.main.domain.LoginDetailsSB;
 import com.mindgate.main.repository.EmployeeRepositoryInterface;
 
 @Service
 @Scope("prototype")
-public class EmployeeService implements EmployeeServiceInterface{
-	
+public class EmployeeService implements EmployeeServiceInterface {
+
 	@Autowired
-   private EmployeeRepositoryInterface employeeRepositoryInterface;
+	private EmployeeRepositoryInterface employeeRepositoryInterface;
 
 	@Override
 	public boolean addNewEmployee(EmployeeDetails employeeDetails) {
@@ -38,9 +39,22 @@ public class EmployeeService implements EmployeeServiceInterface{
 
 	@Override
 	public List<EmployeeDetails> getAllEmployees() {
-	return employeeRepositoryInterface.getAllEmployees();
+		return employeeRepositoryInterface.getAllEmployees();
 	}
-	
 
+	@Override
+	public EmployeeDetails login(EmployeeDetails employeeDetails) {
+		String loginId = employeeDetails.getLoginId();
+		String password = employeeDetails.getPassword();
+		int employeeId = employeeDetails.getEmployeeId();
+		EmployeeDetails oldEmployee = employeeRepositoryInterface.getEmployeeByEmployeeId(employeeId);
+
+		if (oldEmployee.getEmployeeId()==employeeId) {
+			if (oldEmployee.getPassword().equals(password)) {
+				return oldEmployee;
+			}
+		}
+		return null;
+	}
 
 }

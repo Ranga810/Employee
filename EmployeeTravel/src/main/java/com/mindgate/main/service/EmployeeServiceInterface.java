@@ -15,4 +15,11 @@ public interface EmployeeServiceInterface  {
 	   public EmployeeDetails getEmployeeByEmployeeId(int employeeId);
 	   
 	   public List<EmployeeDetails> getAllEmployees();
+	   
+	   
+
+	  // public EmployeeDetails getLoginDetailsByEmployeeId(EmployeeDetails employeeDetails);
+	   
+	   public EmployeeDetails login(EmployeeDetails employeeDetails);
+	   
 }

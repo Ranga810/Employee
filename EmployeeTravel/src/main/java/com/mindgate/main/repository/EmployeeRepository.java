@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mindgate.main.domain.EmployeeDetails;
+//import com.mindgate.main.domain.LoginDetailsSB;
 import com.mindgate.main.domain.Slab;
 
 @Repository
@@ -20,7 +21,8 @@ public class EmployeeRepository implements EmployeeRepositoryInterface {
 	private final static String SELECT_ONE_EMPLOYEE = "select *  from employee_details,SLAB where employee_details.SLAB_ID=SLAB.SLAB_ID  and employee_details.EMPLOYEE_ID=?";
 	private final static String INSERT_NEW_EMPLOYEE = "insert into employee_details values(EMPLOYEE_ID.nextVal,?,?,?,?,?,?,?,?,?)";
 	private final static String UPDATE_EXISTING_EMPLOYEE = "update employee_details set FIRST_NAME=?,LAST_NAME=?,LOGIN_ID=?,PASSWORD=?,Role=?,EMAIL=?,CONTACT_NUMBER=?,Manager_id=? where EMPLOYEE_ID=?";
-	private final static String DELETE_EXISTING_EMPLOYEE = "delete from employee_details where EMPLOYEE_ID=?";;
+	private final static String DELETE_EXISTING_EMPLOYEE = "delete from employee_details where EMPLOYEE_ID=?";
+	private final static String SELECT_ONE_LOGIN_DETAILS = "select *  from employee_details,SLAB where employee_details.SLAB_ID=SLAB.SLAB_ID  and employee_details.EMPLOYEE_ID=?";
 
 	public void testConnection() {
 		if (jdbcTemplate != null) {
@@ -32,14 +34,9 @@ public class EmployeeRepository implements EmployeeRepositoryInterface {
 
 	@Override
 	public boolean addNewEmployee(EmployeeDetails employeeDetails) {
-		Object parameters[] = { employeeDetails.getFirstName(), 
-				employeeDetails.getLastName(),
-				employeeDetails.getLoginId(), 
-				employeeDetails.getPassword(), 
-				employeeDetails.getRole(),
-				employeeDetails.getEmail(), 
-				employeeDetails.getContactNo(), 
-				employeeDetails.getManagerId(),
+		Object parameters[] = { employeeDetails.getFirstName(), employeeDetails.getLastName(),
+				employeeDetails.getLoginId(), employeeDetails.getPassword(), employeeDetails.getRole(),
+				employeeDetails.getEmail(), employeeDetails.getContactNo(), employeeDetails.getManagerId(),
 				employeeDetails.getSlab().getSlabId() };
 		int rowcount = jdbcTemplate.update(INSERT_NEW_EMPLOYEE, parameters);
 		if (rowcount > 0) {
@@ -50,17 +47,11 @@ public class EmployeeRepository implements EmployeeRepositoryInterface {
 
 	@Override
 	public EmployeeDetails updateEmployee(EmployeeDetails employeeDetails) {
-		Object[] parameters = { employeeDetails.getFirstName(),
-				employeeDetails.getLastName(),
-				employeeDetails.getLoginId(), 
-				employeeDetails.getPassword(), 
-				employeeDetails.getRole(),
-				employeeDetails.getEmail(),
-				employeeDetails.getContactNo(),
-				employeeDetails.getManagerId(),
-				employeeDetails.getEmployeeId()
-				};
-		
+		Object[] parameters = { employeeDetails.getFirstName(), employeeDetails.getLastName(),
+				employeeDetails.getLoginId(), employeeDetails.getPassword(), employeeDetails.getRole(),
+				employeeDetails.getEmail(), employeeDetails.getContactNo(), employeeDetails.getManagerId(),
+				employeeDetails.getEmployeeId() };
+
 		int rowCount = jdbcTemplate.update(UPDATE_EXISTING_EMPLOYEE, parameters);
 		System.out.println(rowCount);
 		if (rowCount > 0) {
@@ -93,4 +84,14 @@ public class EmployeeRepository implements EmployeeRepositoryInterface {
 		return jdbcTemplate.query(SELECT_ALL_EMPLOYEES, employeeRowMapper);
 	}
 
+	@Override
+	public EmployeeDetails getLoginDetailsByEmployeeId(EmployeeDetails employeeDetails) {
+
+		EmployeeRowMapper employeeRowMapper = new EmployeeRowMapper();
+		EmployeeDetails existingLogin = jdbcTemplate.queryForObject(SELECT_ONE_LOGIN_DETAILS, employeeRowMapper,employeeDetails.getEmployeeId());
+		if (existingLogin != null)
+			return existingLogin;
+		else
+			return null;
+	}
 }

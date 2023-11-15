@@ -1,11 +1,9 @@
 package com.mindgate.main.controller;
 
-
-	 
-
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindgate.main.domain.EmployeeDetails;
+//import com.mindgate.main.domain.LoginDetailsSB;
 import com.mindgate.main.domain.Slab;
 import com.mindgate.main.service.EmployeeServiceInterface;
 
@@ -55,4 +53,10 @@ public class EmployeeCRUDController {
 	public boolean deleteEmployee(@PathVariable int EMPLOYEE_ID) {
 		return employeeServiceInterface.deleteEmployee(EMPLOYEE_ID);
 	}
+
+	@RequestMapping(value = "loginId/employeeDetails", method = RequestMethod.PUT)
+	public EmployeeDetails login(@RequestBody EmployeeDetails employeeDetails) {
+		return employeeServiceInterface.login(employeeDetails);
+	}
+
 }
