@@ -39,5 +39,13 @@ public class RequestCrudController {
 	public TravelRequest updaterequest(@RequestBody TravelRequest  travelRequest ) {
 		return requestServiceInterface.updaterequest(travelRequest);
 	}
+	
+	
+	
+	//http://localhost:8085/requestapi/requestbyemp/{employeeId}
+	@RequestMapping(value="requestbyemp/{employeeId}",method = RequestMethod.GET)
+	public List selectrequestbyemployeeid(@PathVariable int employeeId) {
+		return requestServiceInterface.getrequestByemployeeId(employeeId);
+	}
 
 }

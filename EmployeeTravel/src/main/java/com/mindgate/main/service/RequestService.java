@@ -38,6 +38,18 @@ public class RequestService implements RequestServiceInterface{
 	public TravelRequest getrequestByrequestId(int requestId) {
 		return  travelRequestRepositoryInterface.getrequestByrequestId(requestId);
 	}
+
+	@Override
+	public List<TravelRequest> getrequestByemployeeId(int employeeId) {
+		return  travelRequestRepositoryInterface.getrequestByemployeeId(employeeId);
+	}
+
+	/*@Override
+	public TravelRequest getrequestByemployeeId(int employeeId) {
+		return  travelRequestRepositoryInterface.getrequestByemployeeId(employeeId);
+	}
+	*/
+	
 	
 
 }

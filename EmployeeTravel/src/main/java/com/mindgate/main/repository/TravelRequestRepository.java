@@ -22,11 +22,14 @@ public class TravelRequestRepository implements TravelRequestRepositoryInterface
     	
 
 	private final static String DELETE_EXISTING_REQUEST="delete from travel_request where travel_request_id =?";
+	
+	private final static String SELECT_REQUEST_EMPLOYEEID="select * from travel_request r, document d,employee_details e,slab s where r.DOCUMENT_ID=d.DOCUMENT_ID and r.EMPLOYEE_ID=e.EMPLOYEE_ID and s.slab_id=e.slab_id  and  r.employee_id=?";
+			
 
 	@Override
 	public boolean addnewrequest(TravelRequest travelRequest) {
 		 Object[] parameters = { 
-//				 travelRequest.getRequestId(),
+				 travelRequest.getRequestId(),
 				 travelRequest.getEmployeeId(),
 				 travelRequest.getTravelMedium(),
 				 travelRequest.getTravelStartDate(),
@@ -82,6 +85,20 @@ Object [] parameters = {
 	public List<TravelRequest> getallrequests() {
 		RequestRowMapper requestRowMapper = new RequestRowMapper();
     	return jdbcTemplate.query(SELECT_ALL_REQUESTS,requestRowMapper);
+	}
+	/*@Override
+	public TravelRequest getrequestByemployeeId(int employeeId) {
+		RequestRowMapper requestRowMapper = new RequestRowMapper();
+		TravelRequest travelRequest =jdbcTemplate.queryForObject(SELECT_REQUEST_EMPLOYEEID, requestRowMapper,employeeId);
+    	
+		return travelRequest;
+	}
+	*/
+	@Override
+	public List<TravelRequest> getrequestByemployeeId(int employeeId) {
+		RequestRowMapper requestRowMapper = new RequestRowMapper();
+		return jdbcTemplate.query(SELECT_REQUEST_EMPLOYEEID,requestRowMapper,employeeId);
+		
 	}
 	
 }

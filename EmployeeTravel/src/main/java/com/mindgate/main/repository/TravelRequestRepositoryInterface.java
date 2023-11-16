@@ -10,6 +10,7 @@ public interface TravelRequestRepositoryInterface {
 	public  TravelRequest updaterequest(TravelRequest TravelRequest);
 	public boolean deleterequest(int requestId);
 	public TravelRequest getrequestByrequestId(int requestId);
-
+    //public  TravelRequest getrequestByemployeeId(int employeeId);
 	public List<TravelRequest> getallrequests();
+	public List<TravelRequest> getrequestByemployeeId(int employeeId);
 }
