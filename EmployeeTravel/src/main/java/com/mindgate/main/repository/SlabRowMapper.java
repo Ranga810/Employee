@@ -16,6 +16,7 @@ public class SlabRowMapper implements RowMapper<Slab> {
 		String internationalTravel=rs.getString("INTERNATIONAL_TRAVEL");
 		int slab_Amount=rs.getInt("SLAB_AMMOUNT");
 		String internationalForex=rs.getString("INTERNATIONAL_FOREX");
+		
 		Slab slab=new Slab(slabId,role,internationalTravel,slab_Amount,internationalForex);
 		return slab;
 	}
